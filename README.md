@@ -1,7 +1,7 @@
 # tgbot
 Запуск:
 
->python tgbot
+>python tgbot.py
 
 Список
 ![Image alt](https://github.com/wrongroute/batchproc/raw/master/static/list.jpg)
