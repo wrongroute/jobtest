@@ -1,4 +1,7 @@
 # tgbot
+
+Имя бота в тг: @route4me_bot
+
 Запуск:
 
 >python tgbot.py
