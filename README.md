@@ -13,4 +13,4 @@
 ![Image alt](https://github.com/wrongroute/jobtest/raw/master/static/exchange.png)
 
 История
-![Image alt](https://github.com/wrongroute/jobtest/raw/master/static/history.png)
+![Image alt](https://github.com/wrongroute/jobtest/raw/master/static/hist.png)
