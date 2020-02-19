@@ -53,8 +53,8 @@ before_bot()
 bot = telebot.TeleBot('793393414:AAGnfD3QvR6U8EVTyq8VCTlPZDtVJpLhJL8')
 
 
-def create_graph():
-    raw_df = load_hist()
+def create_graph(data_arg, fa, sa):
+    raw_df = data_arg
     x_axis = sorted(raw_df['rates'])
     y_axis = []
     for i in sorted(raw_df['rates'].items()):
@@ -63,7 +63,7 @@ def create_graph():
              marker='o', markerfacecolor='blue', markersize=10)
     plt.xlabel('x - date')
     plt.ylabel('y - rate')
-    plt.title('USD-CAD')
+    plt.title(fa + '-' + sa)
     plt.savefig('hist.png')
 
 
@@ -117,8 +117,18 @@ def start_command(message):
 
 
 @bot.message_handler(commands=['history'])
-def start_hist(message):
-    create_graph()
+def start_history(message):
+    bot.send_message(message.from_user.id, "Write what currency you want see in history\n" +
+                     "Example: USD-CAD")
+    bot.register_next_step_handler(message, get_hist)
+def get_hist(message):
+    usr_hist = message.text
+    fc, sc = usr_hist[0:3], usr_hist[-3:]
+    sub_days = datetime.datetime.today() + relativedelta(days=-7)
+    p_url = "https://api.exchangeratesapi.io/history?start_at=%s&end_at=%s&base=%s&symbols=%s" % (
+        sub_days.strftime('%Y-%m-%d'), lasttime.strftime('%Y-%m-%d'), fc, sc)
+    data_hist = json.loads(requests.get(p_url).text)
+    create_graph(data_hist, fc, sc)
     img = open('hist.png', 'rb')
     bot.send_photo(message.chat.id, img)
     img.close()
